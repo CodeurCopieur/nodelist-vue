@@ -1,13 +1,10 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import NavBar from './components/Layout/NavBar.vue'
 </script>
 
 <template>
+  <NavBar/>
   <div>
-    <div>
-      <RouterLink :to="{ name: 'notes' }">Notes</RouterLink> |
-      <RouterLink :to="{ name: 'stats' }">Stats</RouterLink>
-    </div>
     <RouterView />
   </div>
 </template>
