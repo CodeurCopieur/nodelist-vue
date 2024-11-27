@@ -6,7 +6,7 @@ import { ref } from 'vue';
 
 <template>
   <nav class="navbar is-danger" role="navigation" aria-label="main navigation">
-    <div class="container">
+    <div class="container px-2">
       <div class="navbar-brand">
         <RouterLink class="navbar-item is-size-4 is-family-monospace" 
         :to="{ name: 'notes' }" active-class="is-active">NotesList</RouterLink>
