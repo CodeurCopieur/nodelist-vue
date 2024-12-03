@@ -1,5 +1,21 @@
 <script setup>
-  
+import { ref } from 'vue';
+
+  const notes = ref([{ id: 'id1', content: 'First Notes'}, { id: 'id2', content: 'Second Notes'}]);
+  const newNotes = ref('');
+
+  const newNoteRef = ref(null);
+  const AddNotes = ()=> {
+    const currentDate = new Date().getTime();
+    const note = {
+      id: `id${currentDate}`,
+      content: newNotes.value
+    }
+    // notes.value.push(note);
+    notes.value.unshift(note);
+    newNotes.value = '';
+    newNoteRef.value.focus;
+  }
 </script>
 
 <template>
@@ -8,29 +24,24 @@
     <div class="field">
       <label class="label">Note</label>
       <div class="control">
-        <textarea class="textarea" placeholder="Textarea"></textarea>
+        <textarea class="textarea" placeholder="Textarea" 
+          v-model="newNotes"
+          ref="newNoteRef"></textarea>
       </div>
     </div>
 
     <div class="field is-grouped">
       <div class="control">
-        <button class="button is-link">Ajouter une nouvelle note</button>
-      </div>
-      <div class="control">
-        <button class="button is-link is-light">Cancel</button>
+        <button :disabled="!newNotes" class="button is-link" @click="AddNotes">Ajouter une nouvelle note</button>
       </div>
     </div>
   </div>
 
 
-  <div class="card">
+  <div class="card" v-for="note in notes" :key="note.id">
     <div class="card-content">
       <div class="content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
-        iaculis mauris.
-        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-        <br />
-        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+        {{ note.content }}
       </div>
     </div>
     <footer class="card-footer">
