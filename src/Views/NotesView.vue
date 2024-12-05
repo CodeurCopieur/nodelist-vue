@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import SingleNotes from '../components/Notes/SingleNotes.vue';
 
   const notes = ref([{ id: 'id1', content: 'First Notes'}, { id: 'id2', content: 'Second Notes'}]);
   const newNotes = ref('');
@@ -37,16 +38,5 @@ import { ref } from 'vue';
     </div>
   </div>
 
-
-  <div class="card" v-for="note in notes" :key="note.id">
-    <div class="card-content">
-      <div class="content">
-        {{ note.content }}
-      </div>
-    </div>
-    <footer class="card-footer">
-      <a href="#" class="card-footer-item">Edit</a>
-      <a href="#" class="card-footer-item">Delete</a>
-    </footer>
-  </div>
+  <SingleNotes v-for="note in notes" :key="note.id" :note="note" />
 </template>
