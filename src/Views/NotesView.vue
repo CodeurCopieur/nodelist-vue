@@ -16,7 +16,12 @@ import SingleNotes from '../components/Notes/SingleNotes.vue';
     notes.value.unshift(note);
     newNotes.value = '';
     newNoteRef.value.focus;
-  }
+  };
+
+  const deleteNote = (idToDelete)=> {
+    notes.value = notes.value.filter(note => note.id !== idToDelete)
+    
+  };
 </script>
 
 <template>
@@ -38,5 +43,5 @@ import SingleNotes from '../components/Notes/SingleNotes.vue';
     </div>
   </div>
 
-  <SingleNotes v-for="note in notes" :key="note.id" :note="note" />
+  <SingleNotes v-for="note in notes" :key="note.id" :note="note" @onDeleteClicked="deleteNote" />
 </template>

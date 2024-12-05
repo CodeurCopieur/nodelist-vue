@@ -13,6 +13,12 @@ import { computed } from 'vue';
     const textDesc = contentLength > 1 ? ' charactères' : ' charactère' 
     return `${contentLength} ${textDesc}`
   });
+
+  const emit = defineEmits(['onDeleteClicked'])
+
+  const handleDeleteClick = ()=> {
+    emit('onDeleteClicked', props.note.id)
+  }
 </script>
 
 <template>
@@ -28,7 +34,7 @@ import { computed } from 'vue';
     </div>
     <footer class="card-footer">
       <a href="#" class="card-footer-item">Edit</a>
-      <a href="#" class="card-footer-item">Delete</a>
+      <a href="#" class="card-footer-item" @click.prevent="handleDeleteClick">Delete</a>
     </footer>
   </div>
 </template>
