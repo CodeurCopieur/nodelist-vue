@@ -1,21 +1,19 @@
 <script setup>
 import { ref } from 'vue';
 import SingleNotes from '../components/Notes/SingleNotes.vue';
+import {useNotesStore} from '../stores/notesStore';
+import { storeToRefs } from 'pinia';
 
-  const notes = ref([{ id: 'id1', content: 'First Notes'}, { id: 'id2', content: 'Second Notes'}]);
+  const notesStore = useNotesStore()
+  const {notes} = storeToRefs(notesStore)
+
   const newNotes = ref('');
 
   const newNoteRef = ref(null);
   const AddNotes = ()=> {
-    const currentDate = new Date().getTime();
-    const note = {
-      id: `id${currentDate}`,
-      content: newNotes.value
-    }
-    // notes.value.push(note);
-    notes.value.unshift(note);
+   notesStore.addNotes(newNotes.value)
     newNotes.value = '';
-    newNoteRef.value.focus;
+    newNoteRef.value.focus();
   };
 
   const deleteNote = (idToDelete)=> {
