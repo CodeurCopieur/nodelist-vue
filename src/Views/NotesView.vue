@@ -16,10 +16,6 @@ import { storeToRefs } from 'pinia';
     newNoteRef.value.focus();
   };
 
-  const deleteNote = (idToDelete)=> {
-    notes.value = notes.value.filter(note => note.id !== idToDelete)
-    
-  };
 </script>
 
 <template>

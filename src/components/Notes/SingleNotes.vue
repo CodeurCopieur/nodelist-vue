@@ -1,5 +1,7 @@
 <script setup>
 import { computed } from 'vue';
+import {useNotesStore} from '../../stores/notesStore'
+import { storeToRefs } from 'pinia';
 
   const props = defineProps({
     note:{
@@ -14,10 +16,13 @@ import { computed } from 'vue';
     return `${contentLength} ${textDesc}`
   });
 
-  const emit = defineEmits(['onDeleteClicked'])
+  // const emit = defineEmits(['onDeleteClicked'])
+
+  const notesStore = useNotesStore()
 
   const handleDeleteClick = ()=> {
-    emit('onDeleteClicked', props.note.id)
+    // emit('onDeleteClicked', props.note.id)
+    notesStore.deleteNote(props.note.id)
   }
 </script>
 
