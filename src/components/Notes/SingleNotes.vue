@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import {useNotesStore} from '../../stores/notesStore'
 import { storeToRefs } from 'pinia';
+import { RouterLink } from 'vue-router';
 
   const props = defineProps({
     note:{
@@ -38,7 +39,7 @@ import { storeToRefs } from 'pinia';
       </div>
     </div>
     <footer class="card-footer">
-      <a href="#" class="card-footer-item">Edit</a>
+      <RouterLink :to="{name: 'edit-note', params: { id: note.id}}" class="card-footer-item">Edit</RouterLink>
       <a href="#" class="card-footer-item" @click.prevent="handleDeleteClick">Delete</a>
     </footer>
   </div>
