@@ -5,14 +5,28 @@ import AddEditNote from '../components/Notes/AddEditNote.vue';
 import {useNotesStore} from '../stores/notesStore';
 import { storeToRefs } from 'pinia';
 
-  const notesStore = useNotesStore()
-  const {notes} = storeToRefs(notesStore);
+const notesStore = useNotesStore()
+const {notes} = storeToRefs(notesStore);
 
+const newNotes = ref('');
+
+const addEditNoteRef = ref(null);
+const AddNotes = ()=> {
+  notesStore.addNotes(newNotes.value)
+  newNotes.value = '';
+  addEditNoteRef.value.focusTextArea();
+};
 
 
 </script>
 
 <template>
-  <AddEditNote />
+  <AddEditNote 
+    v-model="newNotes"
+    ref="addEditNoteRef">
+    <template #button>
+      <button :disabled="!newNotes" class="button is-link" @click="AddNotes">Ajouter une nouvelle note</button>
+    </template>
+  </AddEditNote>
   <SingleNotes v-for="note in notes" :key="note.id" :note="note" />
 </template>
