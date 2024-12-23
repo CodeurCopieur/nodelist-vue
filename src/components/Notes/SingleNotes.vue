@@ -1,7 +1,6 @@
 <script setup>
 import { computed } from 'vue';
 import {useNotesStore} from '../../stores/notesStore'
-import { storeToRefs } from 'pinia';
 import { RouterLink } from 'vue-router';
 
   const props = defineProps({
