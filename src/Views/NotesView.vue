@@ -23,7 +23,10 @@ const AddNotes = ()=> {
 <template>
   <AddEditNote 
     v-model="newNotes"
-    ref="addEditNoteRef">
+    ref="addEditNoteRef"
+    bgColor="danger"
+    label="Ajouter une note"
+    placeholder="Saisie la note">
     <template #button>
       <button :disabled="!newNotes" class="button is-link" @click="AddNotes">Ajouter une nouvelle note</button>
     </template>
