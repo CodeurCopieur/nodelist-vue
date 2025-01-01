@@ -20,15 +20,20 @@ export const useNotesStore = defineStore('notesStore', ()=> {
     notes.value.unshift(note);
   };
 
+  const updateNote = (id, content) => {
+    const index = notes.value.findIndex(note => note.id === id)
+    notes.value[index].content = content;
+  }
+
   const deleteNote = (noteId)=> {
     notes.value = notes.value.filter(note => note.id !== noteId)
-    
   };
 
   return {
     notes,
     addNotes,
     deleteNote,
-    getNoteContentById
+    getNoteContentById,
+    updateNote
   }
 })
