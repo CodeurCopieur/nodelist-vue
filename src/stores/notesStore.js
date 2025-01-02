@@ -29,11 +29,26 @@ export const useNotesStore = defineStore('notesStore', ()=> {
     notes.value = notes.value.filter(note => note.id !== noteId)
   };
 
+  const totalNotesCount = computed(()=> {
+    return notes.value.length;
+  });
+
+  const totalCharactersCount = computed(()=> {
+    let count = 0;
+    for (let note of notes.value) {
+      count += note.content.length;
+    }
+
+    return count;
+  })
+
   return {
     notes,
     addNotes,
     deleteNote,
     getNoteContentById,
-    updateNote
+    updateNote,
+    totalNotesCount,
+    totalCharactersCount
   }
 })
