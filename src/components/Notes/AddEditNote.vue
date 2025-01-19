@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { vAutofocus } from "../../directives/vAutofocus";
 // import {useNotesStore} from '../../stores/notesStore';
 // import { storeToRefs } from 'pinia';
 
@@ -43,6 +44,8 @@ const focusTextArea = () => {
 defineExpose({
   focusTextArea
 });
+
+
 </script>
 
 <template>
@@ -54,6 +57,7 @@ defineExpose({
           :placeholder="placeholder" 
           :value="modelValue"
           @input="emit('update:modelValue', $event.target.value)"
+          v-autofocus
           ref="textareaRef"></textarea>
       </div>
     </div>

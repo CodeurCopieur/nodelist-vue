@@ -1,5 +1,6 @@
 <script setup>
 import {useNotesStore} from '../stores/notesStore';
+import { vAutofocus } from "../directives/vAutofocus";
 
 const notesStore = useNotesStore()
 const totalNotesCount = notesStore.totalNotesCount;
@@ -27,5 +28,11 @@ const totalCharactersCount = notesStore.totalCharactersCount;
       </tr>
     </tbody>
   </table>
+
+  <input 
+    type="text" 
+    class="input" 
+    placeholder="Entrer le Feedback..."
+    v-autofocus>
 </div>
 </template>
