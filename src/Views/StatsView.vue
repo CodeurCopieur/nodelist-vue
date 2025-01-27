@@ -1,10 +1,17 @@
 <script setup>
+import { ref } from 'vue';
+
 import {useNotesStore} from '../stores/notesStore';
 import { vAutofocus } from "../directives/vAutofocus";
+
+import { useCharactersLimit } from '../composables/useCharactersLimit';
 
 const notesStore = useNotesStore()
 const totalNotesCount = notesStore.totalNotesCount;
 const totalCharactersCount = notesStore.totalCharactersCount;
+const feedback = ref('');
+
+useCharactersLimit(feedback, 50);
 
 </script>
 
@@ -33,6 +40,8 @@ const totalCharactersCount = notesStore.totalCharactersCount;
     type="text" 
     class="input" 
     placeholder="Entrer le Feedback..."
-    v-autofocus>
+    v-autofocus
+    maxlength="50"
+    v-model="feedback">
 </div>
 </template>

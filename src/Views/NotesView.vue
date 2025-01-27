@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import SingleNotes from '../components/Notes/SingleNotes.vue';
 import AddEditNote from '../components/Notes/AddEditNote.vue';
+
+import { useCharactersLimit } from '../composables/useCharactersLimit';
+
 import {useNotesStore} from '../stores/notesStore';
 import { storeToRefs } from 'pinia';
 
@@ -17,6 +20,7 @@ const AddNotes = ()=> {
   addEditNoteRef.value.focusTextArea();
 };
 
+useCharactersLimit(newNotes, 100);
 
 </script>
 
