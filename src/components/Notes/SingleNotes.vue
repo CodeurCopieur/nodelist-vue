@@ -1,7 +1,8 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import {useNotesStore} from '../../stores/notesStore'
 import { RouterLink } from 'vue-router';
+import DeleteNoteModal  from './DeleteNoteModal.vue';
 
   const props = defineProps({
     note:{
@@ -18,12 +19,17 @@ import { RouterLink } from 'vue-router';
 
   // const emit = defineEmits(['onDeleteClicked'])
 
-  const notesStore = useNotesStore()
+  const notesStore = useNotesStore();
 
   const handleDeleteClick = ()=> {
     // emit('onDeleteClicked', props.note.id)
-    notesStore.deleteNote(props.note.id)
-  }
+    // notesStore.deleteNote(props.note.id)
+    modals.deleteModal = true;
+  };
+
+  const modals = reactive({
+    deleteModal: false
+  });
 </script>
 
 <template>
@@ -41,6 +47,7 @@ import { RouterLink } from 'vue-router';
       <RouterLink :to="{name: 'edit-note', params: { id: note.id}}" class="card-footer-item">Edit</RouterLink>
       <a href="#" class="card-footer-item" @click.prevent="handleDeleteClick">Delete</a>
     </footer>
+    <DeleteNoteModal v-if="modals.deleteModal" v-model="modals.deleteModal"/>
   </div>
 </template>
 
