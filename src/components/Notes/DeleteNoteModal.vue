@@ -1,12 +1,21 @@
 <script setup>
   import { onMounted, onUnmounted } from 'vue'
   import { onClickOutside } from '@vueuse/core'
+  import {useNotesStore} from '../../stores/notesStore'
   import { ref } from 'vue'
 
   const props = defineProps({
-    modelValue: Boolean,
-    required: true
+    modelValue: {
+      type: Boolean,
+      required: true
+    },
+    noteId: {
+      type: String,
+      required: true
+    }
   });
+
+  const notesStore = useNotesStore();
 
   const emits = defineEmits(['update:modelValue']);
   const closeModal = () =>{
@@ -16,6 +25,11 @@
     if (e.key === 'Escape') {
       closeModal()
     }
+  }
+
+  const deleteNote = ()=> {
+    notesStore.deleteNote(props.noteId)
+    closeModal()
   }
 
   const deleteModalRef = ref(null)
@@ -41,7 +55,7 @@
       <section class="modal-card-body"><p>Êtes-vous sure de vouloir supprimer ?</p></section>
       <footer class="modal-card-foot">
         <div class="buttons">
-          <button class="button is-danger">Supprimer</button>
+          <button class="button is-danger" @click="deleteNote">Supprimer</button>
           <button class="button" @click="closeModal">Cancel</button>
         </div>
       </footer>
