@@ -1,14 +1,25 @@
 import { computed, ref } from 'vue';
 import { defineStore } from "pinia";
+import { getDocs, collection} from 'firebase/firestore';
+import { db } from '../js/firebase';
 
 export const useNotesStore = defineStore('notesStore', ()=> {
-  const notes = ref([
-    { id: 'id1', content: 'First Notes'}, { id: 'id2', content: 'Second Notes'}
-  ]);
+  const notes = ref([]);
 
   const getNoteContentById = computed(()=> {
     return (id) => notes.value.find(note => note.id === id)?.content;
   })
+
+  const getNotes = async ()=> {
+    const querySnapshot = await getDocs(collection(db, 'notes'));
+    querySnapshot.forEach(doc => {
+      let note = {
+        id: doc.id,
+        content: doc.data().content
+      }
+      notes.value.push(note);
+    });
+  };
 
   const addNotes = (noteContent)=> {
     const currentDate = new Date().getTime().toString();
@@ -44,6 +55,7 @@ export const useNotesStore = defineStore('notesStore', ()=> {
 
   return {
     notes,
+    getNotes,
     addNotes,
     deleteNote,
     getNoteContentById,
