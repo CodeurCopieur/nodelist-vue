@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
 import { defineStore } from "pinia";
-import { getDocs, collection} from 'firebase/firestore';
+import { getDocs, collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../js/firebase';
 
 export const useNotesStore = defineStore('notesStore', ()=> {
@@ -11,13 +11,25 @@ export const useNotesStore = defineStore('notesStore', ()=> {
   })
 
   const getNotes = async ()=> {
-    const querySnapshot = await getDocs(collection(db, 'notes'));
-    querySnapshot.forEach(doc => {
-      let note = {
-        id: doc.id,
-        content: doc.data().content
-      }
-      notes.value.push(note);
+    // const querySnapshot = await getDocs(collection(db, 'notes'));
+    // querySnapshot.forEach(doc => {
+    //   let note = {
+    //     id: doc.id,
+    //     content: doc.data().content
+    //   }
+    //   notes.value.push(note);
+    // });
+    onSnapshot(collection(db, 'notes'), (querySnapshot)=> {
+        let notesData = [];
+        querySnapshot.forEach(doc => {
+        let note = {
+          id: doc.id,
+          content: doc.data().content
+        }
+        notesData.push(note);
+      });
+
+      notes.value = notesData;
     });
   };
 
