@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
 import { defineStore } from "pinia";
-import { getDocs, collection, onSnapshot, setDoc, doc } from 'firebase/firestore';
+import { getDocs, collection, onSnapshot, setDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../js/firebase';
 
 export const useNotesStore = defineStore('notesStore', ()=> {
@@ -35,28 +35,31 @@ export const useNotesStore = defineStore('notesStore', ()=> {
     });
   };
 
-  const addNotes = async (noteContent)=> {
+  const addNotes = async (noteContent) => {
     const currentDate = new Date().getTime().toString();
-    // const note = {
-    //   id: `id${currentDate}`,
-    //   content: noteContent
-    // }
-    // // notes.value.push(note);
-    // notes.value.unshift(note);
-
+    const rawContent = typeof noteContent === 'object' && noteContent.value !== undefined ? noteContent.value : noteContent;
+  
     await setDoc(doc(notesCollectionRef, currentDate), {
-      content: noteContent
+      content: rawContent
     });
-
   };
 
-  const updateNote = (id, content) => {
-    const index = notes.value.findIndex(note => note.id === id)
-    notes.value[index].content = content;
+  const updateNote = async(id, content) => {
+    // const index = notes.value.findIndex(note => note.id === id)
+    // notes.value[index].content = content;
+
+      // Vérifiez si "content" est un objet réactif et récupérez sa valeur brute
+  const rawContent = typeof content === 'object' && content.value !== undefined ? content.value : content;
+
+  await updateDoc(doc(notesCollectionRef, id), {
+    content: rawContent // Passez la valeur brute ici
+  });
   }
 
-  const deleteNote = (noteId)=> {
-    notes.value = notes.value.filter(note => note.id !== noteId)
+  const deleteNote = async(noteId)=> {
+    // notes.value = notes.value.filter(note => note.id !== noteId)
+    await deleteDoc(doc(notesCollectionRef, noteId));
+
   };
 
   const totalNotesCount = computed(()=> {
