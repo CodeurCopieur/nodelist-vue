@@ -1,12 +1,13 @@
 import { computed, ref } from 'vue';
 import { defineStore } from "pinia";
-import { getDocs, collection, onSnapshot, setDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { getDocs, addDoc, orderBy, query, collection, onSnapshot, setDoc, doc, updateDoc, deleteDoc, limit } from 'firebase/firestore';
 import { db } from '../js/firebase';
 
 export const useNotesStore = defineStore('notesStore', ()=> {
   const notes = ref([]);
 
   const notesCollectionRef = collection(db, 'notes');
+  const notesCollectionQuery = query(notesCollectionRef, orderBy('date', 'desc'), limit(3));
 
   const getNoteContentById = computed(()=> {
     return (id) => notes.value.find(note => note.id === id)?.content;
@@ -21,7 +22,7 @@ export const useNotesStore = defineStore('notesStore', ()=> {
     //   }
     //   notes.value.push(note);
     // });
-    onSnapshot(notesCollectionRef, (querySnapshot)=> {
+    onSnapshot(notesCollectionQuery, (querySnapshot)=> {
         let notesData = [];
         querySnapshot.forEach(doc => {
         let note = {
@@ -39,9 +40,7 @@ export const useNotesStore = defineStore('notesStore', ()=> {
     const currentDate = new Date().getTime().toString();
     const rawContent = typeof noteContent === 'object' && noteContent.value !== undefined ? noteContent.value : noteContent;
   
-    await setDoc(doc(notesCollectionRef, currentDate), {
-      content: rawContent
-    });
+    await addDoc(notesCollectionRef, { content: rawContent, date: currentDate });
   };
 
   const updateNote = async(id, content) => {
