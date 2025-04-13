@@ -1,6 +1,7 @@
 <script setup>
 import { computed, reactive } from 'vue';
 import {useNotesStore} from '../../stores/notesStore'
+import { useDateFormat } from '@vueuse/core'
 import { RouterLink } from 'vue-router';
 import DeleteNoteModal  from './DeleteNoteModal.vue';
 
@@ -30,6 +31,14 @@ import DeleteNoteModal  from './DeleteNoteModal.vue';
   const modals = reactive({
     deleteModal: false
   });
+
+  
+  const formattedDate = computed(() => {
+    const date = new Date(+props.note.date);
+    const formatDate = useDateFormat(date, 'DD-MM-YYYY à HH:mm:ss');
+    return formatDate.value
+  })
+  
 </script>
 
 <template>
@@ -38,8 +47,9 @@ import DeleteNoteModal  from './DeleteNoteModal.vue';
     <div class="card-content">
       <div class="content">
         {{ note.content }}
-        <div class="has-text-right has-text-grey-light">
-          <small>{{ nbCharactere }}</small>
+        <div class="columns has-text-grey-light mt-2">
+          <small class="column">{{ formattedDate }}</small>
+          <small class="column">{{ nbCharactere }}</small>
         </div>
       </div>
     </div>
