@@ -35,5 +35,13 @@ useCharactersLimit(newNotes, 100);
       <button :disabled="!newNotes" class="button is-link" @click="AddNotes">Ajouter une nouvelle note</button>
     </template>
   </AddEditNote>
-  <SingleNotes v-for="note in notes" :key="note.id" :note="note" />
+   
+  <progress class="progress is-large is-info" max="100" v-if="!notesStore.notesLoaded"/>
+
+  <template v-else>
+    <SingleNotes v-for="note in notes" :key="note.id" :note="note" />
+  </template>
+
+  <div class="has-text-centered py-6 is-size-4 has-text-grey-light is-family-monospace" v-if="!notes.length">Aucune note ajoutée ici pour le moment !!!</div>
+
 </template>
