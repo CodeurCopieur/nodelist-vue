@@ -29,7 +29,7 @@ import { ref } from 'vue';
         class="navbar-menu"
         :class="{ 'is-active' : showNavBarMenu}">
         <div class="navbar-start">
-          <button class="button is-danger" @click="handleLogout">
+          <button class="button is-info is-small mt-3 ml-3" @click="handleLogout">
             Logout
           </button>
         </div>
