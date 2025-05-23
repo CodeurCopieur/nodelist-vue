@@ -28,6 +28,12 @@ import { ref } from 'vue';
       <div id="navbarBasicExample" 
         class="navbar-menu"
         :class="{ 'is-active' : showNavBarMenu}">
+        <div class="navbar-start">
+          <button class="button is-danger" @click="handleLogout">
+            Logout
+          </button>
+        </div>
+        
         <div class="navbar-end">
           <RouterLink :to="{ name: 'notes' }" active-class="is-active" class="navbar-item">
             Notes
@@ -36,6 +42,10 @@ import { ref } from 'vue';
           <RouterLink :to="{ name: 'stats' }" active-class="is-active" class="navbar-item">
             Stats
           </RouterLink>
+
+          <!-- <RouterLink :to="{ name: 'AuthView' }" active-class="is-active" class="navbar-item">
+            AuthView
+          </RouterLink> -->
         </div>
       </div>
     </div>  

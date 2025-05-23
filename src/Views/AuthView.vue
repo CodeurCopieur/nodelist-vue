@@ -11,28 +11,30 @@
         </ul>
     </div>
 
-    <form class="card auth">
+    <form class="card auth" @submit.prevent="handleSubmit">
         <div class="card-content">
             <div class="title">
-                {{ register ? 'Register' : 'Login' }}
+                <!-- {{ register ? 'Register' : 'Login' }} -->
+                {{ formTitle }}
             </div>  
             <div class="content">
                 <div class="field">
                     <label class="label">Email</label>
                     <div class="control">
-                        <input class="input" type="email" placeholder="Email">
+                        <input class="input" type="email" placeholder="Email" v-model="credentials.email">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label">Password</label>
                     <div class="control">
-                        <input class="input" type="password" placeholder="Password">
+                        <input class="input" type="password" placeholder="Password" v-model="credentials.password">
                     </div>
                 </div>  
-                <div class="field">
+                <div class="field is-grouped is-grouped-right">
                     <div class="control">
                         <button class="button is-danger" type="submit">
-                            {{ register ? 'Register' : 'Login' }}
+                            <!-- {{ register ? 'Register' : 'Login' }} -->
+                            {{ formTitle }}
                         </button>
                     </div>
                 </div>
@@ -43,9 +45,31 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, reactive } from 'vue';
 
 const register = ref(false);
+
+const formTitle = computed(() => {
+    return register.value ? 'Register' : 'Login';
+});
+
+const credentials = reactive({
+    email: '',
+    password: '',
+});
+
+const handleSubmit = () => {
+    if (!credentials.email || !credentials.password) {
+        alert('Please fill in all fields : ' + credentials.email + ' ' + credentials.password); 
+        return;
+    }
+
+    if (register.value) {
+        console.log('Register : ', credentials);
+    } else {
+        console.log('Login : ', credentials);
+    }
+};
 </script>
 <style scoped>
     .auth {
