@@ -46,8 +46,10 @@
 </template>
 <script setup>
 import { ref, computed, reactive } from 'vue';
+import { useAuthStore } from '../stores/AuthStore';
 
 const register = ref(false);
+const authStore = useAuthStore();
 
 const formTitle = computed(() => {
     return register.value ? 'Register' : 'Login';
@@ -65,7 +67,7 @@ const handleSubmit = () => {
     }
 
     if (register.value) {
-        console.log('Register : ', credentials);
+        authStore.registerUser(credentials);
     } else {
         console.log('Login : ', credentials);
     }
