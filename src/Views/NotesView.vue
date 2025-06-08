@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import SingleNotes from '../components/Notes/SingleNotes.vue';
 import AddEditNote from '../components/Notes/AddEditNote.vue';
 
@@ -9,6 +9,10 @@ import {useNotesStore} from '../stores/notesStore';
 import { storeToRefs } from 'pinia';
 
 const notesStore = useNotesStore()
+
+onMounted(() => {
+  notesStore.getNotes();
+});
 const {notes} = storeToRefs(notesStore);
 
 const newNotes = ref('');

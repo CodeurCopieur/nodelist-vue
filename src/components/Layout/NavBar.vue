@@ -1,7 +1,13 @@
 <script setup>
 import { ref } from 'vue';
+import { useAuthStore } from '../../stores/AuthStore';
 
+  const authStore = useAuthStore();
   const showNavBarMenu = ref(false);
+
+  const handleLogout = () => {
+    authStore.logoutUser();
+  }
 </script>
 
 <template>

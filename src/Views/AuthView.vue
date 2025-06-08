@@ -1,3 +1,32 @@
+<script setup>
+import { ref, computed, reactive } from 'vue';
+import { useAuthStore } from '../stores/AuthStore';
+
+const register = ref(false);
+const authStore = useAuthStore();
+
+const formTitle = computed(() => {
+    return register.value ? 'Register' : 'Login';
+});
+
+const credentials = reactive({
+    email: '',
+    password: '',
+});
+
+const handleSubmit = () => {
+    if (!credentials.email || !credentials.password) {
+        alert('Please fill in all fields : ' + credentials.email + ' ' + credentials.password); 
+        return;
+    }
+
+    if (register.value) {
+        authStore.registerUser(credentials);
+    } else {
+        authStore.loginUser(credentials);
+    }
+};
+</script>
 <template>
   <div class="auth-form">
     <div class="tabs is-centered">
@@ -44,35 +73,7 @@
     </form>
   </div>
 </template>
-<script setup>
-import { ref, computed, reactive } from 'vue';
-import { useAuthStore } from '../stores/AuthStore';
 
-const register = ref(false);
-const authStore = useAuthStore();
-
-const formTitle = computed(() => {
-    return register.value ? 'Register' : 'Login';
-});
-
-const credentials = reactive({
-    email: '',
-    password: '',
-});
-
-const handleSubmit = () => {
-    if (!credentials.email || !credentials.password) {
-        alert('Please fill in all fields : ' + credentials.email + ' ' + credentials.password); 
-        return;
-    }
-
-    if (register.value) {
-        authStore.registerUser(credentials);
-    } else {
-        console.log('Login : ', credentials);
-    }
-};
-</script>
 <style scoped>
     .auth {
         width: 400px;

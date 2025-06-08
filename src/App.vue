@@ -2,12 +2,15 @@
 import { onMounted } from 'vue';
 import NavBar from './components/Layout/NavBar.vue'
 import { useNotesStore } from './stores/notesStore';
+import { useAuthStore } from './stores/AuthStore';
 
-const notesStore = useNotesStore();
+const authStore = useAuthStore();
 
 onMounted(() => {
-  notesStore.getNotes();
+  authStore.init();
 });
+
+
 </script>
 
 <template>
