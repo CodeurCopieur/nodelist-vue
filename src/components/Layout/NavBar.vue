@@ -2,12 +2,13 @@
 import { ref } from 'vue';
 import { useAuthStore } from '../../stores/AuthStore';
 
-  const authStore = useAuthStore();
-  const showNavBarMenu = ref(false);
+const authStore = useAuthStore();
+const showNavBarMenu = ref(false);
 
   const handleLogout = () => {
     authStore.logoutUser();
   }
+
 </script>
 
 <template>
@@ -35,8 +36,8 @@ import { useAuthStore } from '../../stores/AuthStore';
         class="navbar-menu"
         :class="{ 'is-active' : showNavBarMenu}">
         <div class="navbar-start">
-          <button class="button is-info is-small m-3 ml-3" @click="handleLogout">
-            Logout
+          <button v-if="authStore.user?.uid" class="button is-info is-small m-3 ml-3" @click="handleLogout">
+            Logout {{ authStore.user?.email }}
           </button>
         </div>
         

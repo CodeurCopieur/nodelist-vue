@@ -2,18 +2,20 @@ import { defineStore } from 'pinia';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../js/firebase';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export const useAuthStore = defineStore('authStore', () => {
     const user = ref(null);
+    const router = useRouter();
     const init = () => {
         onAuthStateChanged(auth, (userDetails) => {
             if (userDetails) {
                
                 user.value = {email: userDetails.email, uid: userDetails.uid};
-                console.log('User is logged in', user.value);
+                router.push({name: 'notes'});
             } else {
                 user.value = {};
-                console.log('User is logged out');
+                router.replace({name: 'auth'});
             }
         });
     }

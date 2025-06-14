@@ -8,6 +8,7 @@ const authStore = useAuthStore();
 
 onMounted(() => {
   authStore.init();
+  console.log('Auth initialized:', authStore.user);
 });
 
 
